@@ -17,7 +17,7 @@ def contact(request):
     return render(request , 'contact.html')
 
 def departments(request):
-    return render(request , 'repartments.html')
+    return render(request , 'departments.html')
 
 def doctors(request):
     return render(request , 'doctors.html')
@@ -34,7 +34,7 @@ def registration(request):
             return HttpResponse("Patient already registered")
         else:
             Patient.objects.create(name=name , phone=phone , email=email , password=password , message=message)
-            return redirect("/login/")
+            return redirect("/loginview/")
         
 def login(request):
     if request.method == "POST":
@@ -42,9 +42,9 @@ def login(request):
         password = request.POST['password']
         if Patient.objects.filter(email=email).exists():
             obj = Patient.objects.get(email=email)
-            password = obj.password
-            if check_password(password,password):
-                return redirect('/depatrments/')
+            pwd = obj.password
+            if check_password(password,pwd):
+                return redirect('/departments/')
             else:
                 return HttpResponse("Incorrect password")
         else:
