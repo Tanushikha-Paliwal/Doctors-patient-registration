@@ -39,7 +39,7 @@
   <div class="hero_area">
 
     <div class="hero_bg_box">
-      <img src="images/hero-bg.png" alt="">
+      <img src="{% static "images/hero-bg.png" %}" alt="">
     </div>
 
     <!-- header section strats -->
@@ -69,6 +69,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="doctors/">Doctors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="patient/">Patient</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contact/">Contact Us</a>
@@ -211,7 +214,7 @@
           <div class="col-md-3">
             <div class="box ">
               <div class="img-box">
-                <img src="images/s3.png" alt="">
+                <img src="{% static "images/s3.png" %}" alt="">
               </div>
               <div class="detail-box">
                 <h5>
@@ -406,7 +409,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container contact-form">
-            <form action="/login/" method="post">
+            <form action="/departments/" method="post">
               {% csrf_token %}
               <div class="form-row">
               </div>

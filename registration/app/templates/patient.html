@@ -37,6 +37,11 @@
 <body class="sub_page">
 
   <div class="hero_area">
+
+    <div class="hero_bg_box">
+      <img src="images/hero-bg.png" alt="">
+    </div>
+
     <!-- header section strats -->
     <header class="header_section">
       <div class="container">
@@ -62,14 +67,14 @@
               <li class="nav-item">
                 <a class="nav-link" href="departments/">Departments</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="doctors/">Doctors</a>
+              <li class="nav-item active">
+                <a class="nav-link" href="doctors/">Doctors <span class="sr-only">(current)</span> </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="patient/">Patient</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="contact/">Contact Us <span class="sr-only">(current)</span> </a>
+              <li class="nav-item">
+                <a class="nav-link" href="contact/">Contact Us</a>
               </li>
               <form class="form-inline">
                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
@@ -84,55 +89,73 @@
     <!-- end header section -->
   </div>
 
-  <!-- contact section -->
-  <section class="contact_section layout_padding">
+  <!-- doctor section -->
+
+  <section class="doctor_section layout_padding">
     <div class="container">
-      <div class="heading_container">
+      <div class="heading_container heading_center">
         <h2>
-          Get In Touch
+          Our Patient
         </h2>
+        <p class="col-md-10 mx-auto px-0">
+          Incilint sapiente illo quo praesentium officiis laudantium nostrum, ad adipisci cupiditate sit, quisquam aliquid. Officiis laudantium fuga ad voluptas aspernatur error fugiat quos facilis saepe quas fugit, beatae id quisquam.
+        </p>
       </div>
+      {%for p in patient%}
       <div class="row">
-        <div class="col-md-6">
-          <div class="form_container contact-form">
-            <form action="">
-              <div class="form-row">
-                <div class="col-lg-6">
-                  <div>
-                    <input type="text" placeholder="Your Name" />
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div>
-                    <input type="text" placeholder="Phone Number" />
-                  </div>
-                </div>
+        <div class="col-sm-6 col-lg-4 mx-auto">
+          <div class="box">
+            <div class="img-box">
+              <img src="images/d1.jpg" alt="">
+            </div>
+            <div class="detail-box">
+              <div class="social_box">
+                <a href="">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-youtube" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
               </div>
-              <div>
-                <input type="email" placeholder="Email" />
-              </div>
-              <div>
-                <input type="text" class="message-box" placeholder="Message" />
-              </div>
-              <div class="btn_box">
-                <button>
-                  SEND
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="map_container">
-            <div class="map">
-              <div id="googleMap"></div>
+              <h5>
+                 {{d.name}}
+              </h5>
+              <h6 class="">
+                {{d.email}}
+              </h6>
+              <h6 class="">
+                {{d.phone}}
+              </h6>
+              <h6 class="">
+                {{d.report}}
+              </h6>
+              <h6 class="">
+                {{d.gender}}
+              </h6>
+              <h6 class="">
+                {{d.doctor}}
+              </h6>
             </div>
           </div>
         </div>
+        
+      </div>
+      {% endfor %}
+      <div class="btn-box">
+        <a href="">
+          View All
+        </a>
       </div>
     </div>
   </section>
-  <!-- end contact section -->
+
+  <!-- end doctor section -->
 
   <!-- footer section -->
   <footer class="footer_section">
@@ -204,10 +227,10 @@
               <a class="" href="departments.html">
                 Departments
               </a>
-              <a class="" href="doctors.html">
+              <a class="active" href="doctors.html">
                 Doctors
               </a>
-              <a class="active" href="contact.html">
+              <a class="" href="contact.html">
                 Contact Us
               </a>
             </div>
