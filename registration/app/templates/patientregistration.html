@@ -409,7 +409,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container contact-form">
-            <form action="/doctors/" method="post">
+            <form action="/patientregistration/" method="post">
               {% csrf_token %}
               <div class="form-row">
                 <div class="col-lg-6">
@@ -426,30 +426,30 @@
               <div>
                 <input type="email" placeholder="Email" name="email" />
               </div>
-              <div>
-                <input type="password" placeholder="Password" name="password" />
-              </div>
+              
               <div>
                 {% comment %} <input type="password" placeholder="Doctors" name="doctor" /> {% endcomment %}
-                <select class="form-select form-control" placeholder="courses" onfocus="focused(this)"
+                <select class="form-select form-control"  onfocus="focused(this)"
                           onfocusout="defocused(this)" aria-label="Default select example" name="doctor">
                           <option class="fw-lighter" selected>Doctor</option>
                           {% for doctor in add_doctor %}
-                          <option value="{{doctor.id}}">{{doctor.name}} {{doctor.specialization}} </option>
+                          <option value="{{doctor.id}}">{{doctor.name}} {{doctor.specialization}}</option>
                           {% endfor %}
                 </select>
               </div>
               <div>
-                <input type="password" placeholder="Gender" name="gender" />
+                <input type="textR" value="F"placeholder="Gender" name="gender" />
+            
               </div>
               <div>
-                <input type="text" class="message-box" placeholder="Reports" name="report" />
+                {% comment %} <input type="text" class="message-box" placeholder="Reports" name="report" /> {% endcomment %}
+                <label for="myfile">Upload reports:</label>
+                <input type="file" id="myfile" name="report">
               </div>
               <div class="btn_box">
                 <button type="submit">
                   Register
                 </button>
-                <a href="loginview/">Sign in</a>
               </div>
             </form>
           </div>

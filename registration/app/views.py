@@ -27,7 +27,7 @@ def departments(request):
 
 
 def patient(request):
-    return render(request , "patient.html")
+    return render(request, "patient.html")
 
 
 def doctorsview(request):
@@ -38,8 +38,12 @@ def doctorsview(request):
 def patient_registration_view(request):
     patient = Patient.objects.all()
     add_doctor = Doctors.objects.all()
-    redirect("/patientregistrationview/")
-    return render(request, "patientregistration.html" , {"patient":patient , "add_doctor":add_doctor})
+    # redirect("/patientregistrationview/")
+    return render(
+        request,
+        "patientregistration.html",
+        {"patient":patient ,"add_doctor": add_doctor},
+    )
 
 
 def patient_registration(request):
@@ -47,11 +51,15 @@ def patient_registration(request):
         name = request.POST.get("name")
         phone = request.POST.get("mobile")
         email = request.POST.get("email")
-        report = request.POST.get("report")
+        reports = request.FILES.get("report")
         gender = request.POST.get("gender")
-        doctor_add = request.POST.get("doctor")
-        doctor = Doctors.objects.get(id=doctor_add)
-        password = make_password(request.POST.get("password"))
+        doctor__add_doctor = request.POST["doctor"]
+        print(doctor__add_doctor)
+        print("____________________aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa__________________")
+
+        doctor_obj = Doctors.objects.get(id=doctor__add_doctor)
+        print(doctor_obj)
+        print("____________________hear__________________")
         if Patient.objects.filter(email=email).exists():
             return HttpResponse("Patient already registered")
         elif Patient.objects.filter(phone=phone).exists():
@@ -61,20 +69,22 @@ def patient_registration(request):
                 name=name,
                 phone=phone,
                 email=email,
-                password=password,
-                report=report,
+                reports=reports,
                 gender=gender,
-                doctor=doctor,
+                doctor=doctor_obj,
             )
-            return HttpResponse("Patient registered successfully")
-            patient = Patient.objects.all()
+            patient= Patient.objects.all()
             add_doctor = Doctors.objects.all()
-            return redirect(request, "doctors.html" , {"patient":patient , "add_doctor":add_doctor})
+            print(add_doctor)
+            return render(request, "doctors.html", {"add_doctor": add_doctor})
     else:
         patient = Patient.objects.all()
         add_doctor = Doctors.objects.all()
-        return render(request, "patientregistration.html" , {"patient":patient , "add_doctor":add_doctor})
-
+        return render(
+            request,
+            "patientregistration.html",
+            {"patient": patient, "add_doctor": add_doctor},
+        )
 
 
 def doctors_registration(request):
@@ -112,5 +122,3 @@ def doctors_login(request):
                 return HttpResponse("Incorrect password")
         else:
             return HttpResponse("Email is not registered")
-
-
