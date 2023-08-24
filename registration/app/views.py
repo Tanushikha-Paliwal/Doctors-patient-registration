@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from .models import *
 from django.http.response import HttpResponse
+from django.contrib import messages
+
 
 # Create your views here.
 
@@ -19,7 +21,8 @@ def about(request):
 
 
 def contact(request):
-    return render(request, "contact.html")
+    contact = Contact.objects.all()
+    return render(request, "contact.html" , {"contact":contact})
 
 
 def departments(request):
@@ -27,7 +30,8 @@ def departments(request):
 
 
 def patient(request):
-    return render(request, "patient.html")
+    patient = Patient.objects.all()
+    return render(request, "patient.html",{"patient":patient})
 
 
 def doctorsview(request):
@@ -54,16 +58,16 @@ def patient_registration(request):
         reports = request.FILES.get("report")
         gender = request.POST.get("gender")
         doctor__add_doctor = request.POST["doctor"]
-        print(doctor__add_doctor)
-        print("____________________aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa__________________")
+        # print(doctor__add_doctor)
+        # print("____________________aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa__________________")
 
         doctor_obj = Doctors.objects.get(id=doctor__add_doctor)
-        print(doctor_obj)
-        print("____________________hear__________________")
+        # print(doctor_obj)
+        # print("____________________hear__________________")
         if Patient.objects.filter(email=email).exists():
-            return HttpResponse("Patient already registered")
+            messages.error(request ,"Patient already registered")
         elif Patient.objects.filter(phone=phone).exists():
-            return HttpResponse("mobile number already exists")
+            messages.error(request ,"mobile number already exists")
         else:
             Patient.objects.create(
                 name=name,
@@ -75,8 +79,8 @@ def patient_registration(request):
             )
             patient= Patient.objects.all()
             add_doctor = Doctors.objects.all()
-            print(add_doctor)
-            return render(request, "doctors.html", {"add_doctor": add_doctor})
+            # print(add_doctor)
+            return render(request, "patient.html", {"patient":patient,"add_doctor": add_doctor})
     else:
         patient = Patient.objects.all()
         add_doctor = Doctors.objects.all()
@@ -96,7 +100,7 @@ def doctors_registration(request):
         degree = request.POST.get("degree")
         specialization = request.POST.get("specialization")
         if Doctors.objects.filter(email=email).exists():
-            return HttpResponse("Doctor already registered")
+            messages.error(request ,"Doctor already registered")
         else:
             Doctors.objects.create(
                 name=name,
@@ -119,6 +123,29 @@ def doctors_login(request):
             if check_password(password, pwd):
                 return redirect("/patient/")
             else:
-                return HttpResponse("Incorrect password")
+                messages.error(request ,"Incorrect password")
         else:
-            return HttpResponse("Email is not registered")
+            messages.error(request ,"Email is not registered")
+
+
+def contact_us(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        phone = request.POST['phone']
+        email = request.POST['email']
+        message = request.POST['message']
+        if Contact.objects.filter(email=email).exists():
+            messages.error(request , "Email Already Exists......")
+        elif Contact.objects.filter(phone=phone).exists():
+            messages.error(request , "Phone number already exists..")
+        else:
+            Contact.objects.create(
+                name=name,
+                phone=phone,
+                email=email,
+                message =message
+            )
+            messages.success(request,"u will be informed soon....")
+            details = Contact.objects.all()
+            return render(request , "contact.html" , {"details":details})
+            
